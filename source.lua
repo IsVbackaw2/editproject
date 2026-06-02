@@ -1687,7 +1687,7 @@ local function createSettings(window)
 			local name = configInput.CurrentValue
 			if name and name ~= "" then
 				CFileName = name
-				saveSettings()
+				SaveConfiguration()
 				secureNotify("save_cfg", "Config Saved", "Saved as " .. name)
 				RefreshConfigDropdown()
 			else
@@ -1713,7 +1713,7 @@ local function createSettings(window)
 		Name = 'Load Selected Config',
 		Callback = function()
 			CFileName = selectedConfig
-			loadSettings()
+			RayfieldLibrary:LoadConfiguration()
 			secureNotify("load_cfg", "Config Loaded", "Loaded " .. selectedConfig)
 		end
 	})
@@ -1869,7 +1869,13 @@ function RayfieldLibrary:CreateWindow(Settings)
 		end
 
 		CFileName = Settings.ConfigurationSaving.FileName
-		ConfigurationFolder = Settings.ConfigurationSaving.FolderName or ConfigurationFolder
+		local BaseFolder = Settings.ConfigurationSaving.FolderName or ConfigurationFolder
+		
+		if Settings.ConfigurationSaving.Enabled then
+			ensureFolder(BaseFolder)
+		end
+		
+		ConfigurationFolder = BaseFolder .. '/' .. tostring(game.PlaceId)
 		CEnabled = Settings.ConfigurationSaving.Enabled
 
 		if Settings.ConfigurationSaving.Enabled then
