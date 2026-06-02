@@ -1663,6 +1663,24 @@ local function createSettings(window)
 		Callback = function(text) end
 	})
 	
+	local configDropdown -- forward declaration
+	local function RefreshConfigDropdown()
+		if not configDropdown then return end
+		local configs = {}
+		if isfolder and listfiles then
+			if isfolder(ConfigurationFolder) then
+				for _, file in pairs(listfiles(ConfigurationFolder)) do
+					if file:match(ConfigurationExtension .. "$") then
+						local name = file:match("([^/\\\\]+)" .. ConfigurationExtension .. "$")
+						if name then table.insert(configs, name) end
+					end
+				end
+			end
+		end
+		if #configs == 0 then table.insert(configs, CFileName or "Default") end
+		configDropdown:Refresh(configs)
+	end
+
 	newTab:CreateButton({
 		Name = 'Save Configuration',
 		Callback = function()
@@ -1671,6 +1689,7 @@ local function createSettings(window)
 				CFileName = name
 				saveSettings()
 				secureNotify("save_cfg", "Config Saved", "Saved as " .. name)
+				RefreshConfigDropdown()
 			else
 				secureNotify("save_cfg", "Error", "Config name cannot be empty!")
 			end
@@ -1678,16 +1697,17 @@ local function createSettings(window)
 	})
 	
 	local selectedConfig = "Default"
-	local configDropdown = newTab:CreateDropdown({
+	configDropdown = newTab:CreateDropdown({
 		Name = 'Select Configuration to Load',
-		Options = {'Default'},
-		CurrentOption = {'Default'},
+		Options = {CFileName or 'Default'},
+		CurrentOption = {CFileName or 'Default'},
 		MultipleOptions = false,
 		Ext = true,
 		Callback = function(option)
 			selectedConfig = option[1]
 		end
 	})
+	RefreshConfigDropdown()
 	
 	newTab:CreateButton({
 		Name = 'Load Selected Config',
@@ -1701,19 +1721,7 @@ local function createSettings(window)
 	newTab:CreateButton({
 		Name = 'Refresh Config List',
 		Callback = function()
-			local configs = {}
-			if isfolder and listfiles then
-				if isfolder(ConfigurationFolder) then
-					for _, file in pairs(listfiles(ConfigurationFolder)) do
-						if file:match(ConfigurationExtension .. "$") then
-							local name = file:match("([^/\\\\]+)" .. ConfigurationExtension .. "$")
-							if name then table.insert(configs, name) end
-						end
-					end
-				end
-			end
-			if #configs == 0 then table.insert(configs, "Default") end
-			configDropdown:Refresh(configs)
+			RefreshConfigDropdown()
 		end
 	})
 
