@@ -1859,28 +1859,24 @@ function RayfieldLibrary:CreateWindow(Settings)
 		end)
 	end
 
+	if not Settings.ConfigurationSaving then
+		Settings.ConfigurationSaving = {}
+	end
+
 	pcall(function()
 		if not Settings.ConfigurationSaving.FileName then
 			Settings.ConfigurationSaving.FileName = tostring(game.PlaceId)
 		end
 
-		if Settings.ConfigurationSaving.Enabled == nil then
-			Settings.ConfigurationSaving.Enabled = false
-		end
+		Settings.ConfigurationSaving.Enabled = true
+		Settings.ConfigurationSaving.FolderName = "WowoHub/Config"
 
 		CFileName = Settings.ConfigurationSaving.FileName
-		local BaseFolder = Settings.ConfigurationSaving.FolderName or ConfigurationFolder
-		
-		if Settings.ConfigurationSaving.Enabled then
-			ensureFolder(BaseFolder)
-		end
-		
-		ConfigurationFolder = BaseFolder .. '/' .. tostring(game.PlaceId)
+		ConfigurationFolder = Settings.ConfigurationSaving.FolderName
 		CEnabled = Settings.ConfigurationSaving.Enabled
 
-		if Settings.ConfigurationSaving.Enabled then
-			ensureFolder(ConfigurationFolder)
-		end
+		ensureFolder("WowoHub")
+		ensureFolder(ConfigurationFolder)
 	end)
 
 
