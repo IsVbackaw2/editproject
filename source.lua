@@ -1651,7 +1651,6 @@ local function createSettings(window)
 				})
 			end
 		end
-		end
 	end
 
 	newTab:CreateSection("Configuration Manager")
