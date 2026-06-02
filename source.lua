@@ -1670,9 +1670,9 @@ local function createSettings(window)
 			if name and name ~= "" then
 				Settings.ConfigurationSaving.FileName = name
 				SaveConfiguration()
-				secureNotify("save_cfg", "Config Saved", "Saved as " .. name)
+				secureNotify("save_cfg", "Config Saved", "Tersimpan sebagai " .. name)
 			else
-				secureNotify("save_cfg", "Error", "Config name cannot be empty!")
+				secureNotify("save_cfg", "Error", "Nama config tidak boleh kosong!")
 			end
 		end
 	})
@@ -1686,7 +1686,7 @@ local function createSettings(window)
 		Callback = function(option)
 			Settings.ConfigurationSaving.FileName = option[1]
 			RayfieldLibrary:LoadConfiguration()
-			secureNotify("load_cfg", "Config Loaded", "Loaded " .. option[1])
+			secureNotify("load_cfg", "Config Loaded", "Berhasil meload " .. option[1])
 		end
 	})
 	
