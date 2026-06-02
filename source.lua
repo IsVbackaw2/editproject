@@ -116,9 +116,9 @@ local function secureNotify(wType, title, content)
 end
 local InterfaceBuild = 'UU2NX'
 local Release = "Build 1.746"
-local RayfieldFolder = "Rayfield"
-local ConfigurationFolder = RayfieldFolder.."/Configurations"
-local ConfigurationExtension = ".rfld"
+local RayfieldFolder = "WowoHub"
+local ConfigurationFolder = RayfieldFolder.."/Config"
+local ConfigurationExtension = ".json"
 local settingsTable = {
 	General = {
 		-- if needs be in order just make getSetting(name)
@@ -1869,13 +1869,12 @@ function RayfieldLibrary:CreateWindow(Settings)
 		end
 
 		Settings.ConfigurationSaving.Enabled = true
-		Settings.ConfigurationSaving.FolderName = "WowoHub/Config"
 
 		CFileName = Settings.ConfigurationSaving.FileName
-		ConfigurationFolder = Settings.ConfigurationSaving.FolderName
+		ConfigurationFolder = Settings.ConfigurationSaving.FolderName or ConfigurationFolder
 		CEnabled = Settings.ConfigurationSaving.Enabled
 
-		ensureFolder("WowoHub")
+		ensureFolder(RayfieldFolder)
 		ensureFolder(ConfigurationFolder)
 	end)
 
