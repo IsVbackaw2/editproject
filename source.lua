@@ -117,7 +117,7 @@ end
 local InterfaceBuild = 'UU2NX'
 local Release = "Build 1.746"
 local RayfieldFolder = "WowoHub"
-local ConfigurationFolder = RayfieldFolder.."/Config"
+local ConfigurationFolder = "WowoHub_Config"
 local ConfigurationExtension = ".json"
 local settingsTable = {
 	General = {
@@ -1869,7 +1869,7 @@ function RayfieldLibrary:CreateWindow(Settings)
 		end
 
 		Settings.ConfigurationSaving.Enabled = true
-		Settings.ConfigurationSaving.FolderName = "WowoHub/Config"
+		Settings.ConfigurationSaving.FolderName = "WowoHub_Config"
 
 		CFileName = Settings.ConfigurationSaving.FileName
 		ConfigurationFolder = Settings.ConfigurationSaving.FolderName
