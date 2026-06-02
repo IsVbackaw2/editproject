@@ -1668,25 +1668,33 @@ local function createSettings(window)
 		Callback = function()
 			local name = configInput.CurrentValue
 			if name and name ~= "" then
-				Settings.ConfigurationSaving.FileName = name
-				SaveConfiguration()
-				secureNotify("save_cfg", "Config Saved", "Tersimpan sebagai " .. name)
+				CFileName = name
+				saveSettings()
+				secureNotify("save_cfg", "Config Saved", "Saved as " .. name)
 			else
-				secureNotify("save_cfg", "Error", "Nama config tidak boleh kosong!")
+				secureNotify("save_cfg", "Error", "Config name cannot be empty!")
 			end
 		end
 	})
 	
+	local selectedConfig = "Default"
 	local configDropdown = newTab:CreateDropdown({
-		Name = 'Load Configuration',
+		Name = 'Select Configuration to Load',
 		Options = {'Default'},
 		CurrentOption = {'Default'},
 		MultipleOptions = false,
 		Ext = true,
 		Callback = function(option)
-			Settings.ConfigurationSaving.FileName = option[1]
-			RayfieldLibrary:LoadConfiguration()
-			secureNotify("load_cfg", "Config Loaded", "Berhasil meload " .. option[1])
+			selectedConfig = option[1]
+		end
+	})
+	
+	newTab:CreateButton({
+		Name = 'Load Selected Config',
+		Callback = function()
+			CFileName = selectedConfig
+			loadSettings()
+			secureNotify("load_cfg", "Config Loaded", "Loaded " .. selectedConfig)
 		end
 	})
 	
