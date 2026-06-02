@@ -1869,9 +1869,10 @@ function RayfieldLibrary:CreateWindow(Settings)
 		end
 
 		Settings.ConfigurationSaving.Enabled = true
+		Settings.ConfigurationSaving.FolderName = "WowoHub/Config"
 
 		CFileName = Settings.ConfigurationSaving.FileName
-		ConfigurationFolder = Settings.ConfigurationSaving.FolderName or ConfigurationFolder
+		ConfigurationFolder = Settings.ConfigurationSaving.FolderName
 		CEnabled = Settings.ConfigurationSaving.Enabled
 
 		ensureFolder(RayfieldFolder)
